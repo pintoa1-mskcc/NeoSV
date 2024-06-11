@@ -56,9 +56,9 @@ def create_arg_parser():
     if not args.anno and not args.hlafile:
         sys.exit('No HLA file specified. The annotation-only mode could be used '
                  '(--annotation-only) if you do not have HLA information.')
-    if not args.anno and not args.netmhc:
-        sys.exit('NetMHCpan not specified. The annotation-only mode could be used '
-                 '(--annotation-only) if you do not want to predict neoantigen.')
+    #if not args.anno and not args.netmhc:
+        #sys.exit('NetMHCpan not specified. The annotation-only mode could be used '
+                 #'(--annotation-only) if you do not want to predict neoantigen.')
     if not os.path.exists(args.outdir):
         os.mkdir(args.outdir)
 
