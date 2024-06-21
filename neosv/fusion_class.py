@@ -105,22 +105,28 @@ class CDSCollection(object):
 
 
 class SVFusion(object):
-    def __init__(self, sv, cdscollection_1, cdscollection_2):
+    def __init__(self, sv, cdscollection_1, cdscollection_2,transcript_1_nt,transcript_2_nt):
         self.sv = sv
         self.cc_1 = cdscollection_1
         self.cc_2 = cdscollection_2
+        self.transcript_1_nt = transcript_1_nt
+        self.transcript_2_nt = transcript_2_nt
         self.nt_sequence = None
         self.aa_sequence = None
-        self.neoepitopes = None
+        self.aa_sequence_wt1 = None
+        self.aa_sequence_wt2 = None
+        self.wt_altered_aa1 = None
+        self.wt_altered_aa2 = None
+        self.mt_altered_aa = None
 
     def __str__(self):
-        return "%s(sv = %r, cc_1 = %r, cc_2 = %r, nt_sequence = %s, aa_sequence = %s)" % (
+        return "%s(sv = %r, cc_1 = %r, cc_2 = %r, transcript_1_nt = %s, transcript_2_nt = %s)" % (
             self.__class__.__name__,
             self.sv,
             self.cc_1,
             self.cc_2,
-            self.nt_sequence,
-            self.aa_sequence
+            self.transcript_1_nt,
+            self.transcript_2_nt
         )
 
     def __repr__(self):

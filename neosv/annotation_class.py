@@ -222,4 +222,4 @@ class SVEffect(object):
             fusion = 'Fusion'
         return [chrom_1, str(pos_1), loc_1, gene_name_1, tran_id_1, strand_1, tran_annot_1,
                 chrom_2, str(pos_2), loc_2, gene_name_2, tran_id_2, strand_2, tran_annot_2,
-                str(self.sv.pattern), self.sv.svtype, fusion]
+                str(self.sv.pattern), self.sv.svtype, fusion, self.sv.id]

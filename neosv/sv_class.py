@@ -7,34 +7,37 @@ class StructuralVariant(object):
     3. sv pattern, format: integer
     NOTE: sv pattern corresponds to 4 patterns in VCF specification
     """
-    def __init__(self, chrom1, pos1, chrom2, pos2, insertion, pattern):
+    def __init__(self, chrom1, pos1, chrom2, pos2, insertion, pattern,id):
         self.chrom1 = str(chrom1).replace('chr', '')
         self.pos1 = int(pos1)
         self.chrom2 = str(chrom2).replace('chr', '')
         self.pos2 = int(pos2)
         self.insertion = insertion
         self.pattern = int(pattern)
+        self.id = id
 
     def __str__(self):
-        return "%s(chrom1 = %s, pos1 = %d, chrom2 = %s, pos2 = %d, insertion = '%s', pattern = %d)" % (
+        return "%s(chrom1 = %s, pos1 = %d, chrom2 = %s, pos2 = %d, insertion = '%s', pattern = %d, id = %s)" % (
             self.__class__.__name__,
             self.chrom1,
             self.pos1,
             self.chrom2,
             self.pos2,
             self.insertion,
-            self.pattern
+            self.pattern,
+            self.id
         )
 
     def __repr__(self):
-        return "%s(%s, %d, %s, %d, '%s', %d)" % (
+        return "%s(%s, %d, %s, %d, '%s', %d, %s)" % (
             self.__class__.__name__,
             self.chrom1,
             self.pos1,
             self.chrom2,
             self.pos2,
             self.insertion,
-            self.pattern
+            self.pattern,
+            self.id
         )
 
     def __eq__(self, other):

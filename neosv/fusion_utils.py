@@ -102,6 +102,8 @@ def sv_to_svfusion(sv, ensembl):
     transcript_1 = get_transcript(sv.chrom1, sv.pos1, ensembl, complete=True)
     transcript_2 = get_transcript(sv.chrom2, sv.pos2, ensembl, complete=True)
     if transcript_1 and transcript_2:
+        transcript_1_nt = transcript_1.coding_sequence
+        transcript_2_nt = transcript_2.coding_sequence
         if transcript_1.strand == '+' and transcript_2.strand == '+':
             if sv.pattern == 1:
                 cdscollection_1 = truncate_cds(transcript_1, '5', sv.pos1)
@@ -157,7 +159,9 @@ def sv_to_svfusion(sv, ensembl):
     else:
         cdscollection_1 = None
         cdscollection_2 = None
-    return SVFusion(sv, cdscollection_1, cdscollection_2)
+        transcript_1_nt = None
+        transcript_2_nt = None
+    return SVFusion(sv, cdscollection_1, cdscollection_2,transcript_1_nt,transcript_2_nt)
 
 
 def svfusions_to_dict(svfusions):

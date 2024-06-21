@@ -29,6 +29,8 @@ def create_arg_parser():
                         help='Directory for Pyensembl cache files. If not specified, the platform-specific cache folder will be used.')
     parser.add_argument('-l', '--epitope-lengths', dest='window', metavar='EPITOPE_LENGTHS', default='8-11',
                         help='Lengths of neoepitopes to predict MHC binding. Default: 8-11.')
+    parser.add_argument('-pl', '--pad_length', dest='pad_length', metavar='PAD LENGTH', default='10',
+                        help='+/- pad length at breakpoint for FASTA generation. Default: 10.')
     parser.add_argument('-ic', '--ic50-cutoff', dest='aff_cutoff', metavar='IC50_CUTOFF', type=float, default=500,
                         help='Filter neoepitopes with IC50 (nM) above this value. Default: 500.')
     parser.add_argument('-brc', '--ba-ranking-cutoff', dest='ba_rank_cutoff', metavar='RANKING_CUTOFF', type=float,

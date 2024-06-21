@@ -42,34 +42,37 @@ class BedpeFormat(object):
     all components are in string format
     """
 
-    def __init__(self, chrom1, pos1, strand1, chrom2, pos2, strand2):
+    def __init__(self, chrom1, pos1, strand1, chrom2, pos2, strand2,id):
         self.chrom1 = chrom1
         self.pos1 = pos1
         self.strand1 = strand1
         self.chrom2 = chrom2
         self.pos2 = pos2
         self.strand2 = strand2
+        self.id = id
 
     def __str__(self):
-        return "%s(chrom1 = %s, pos1 = %s, strand1 = %s, chrom2 = %s, pos2 = %s, strand2 = %s)" % (
+        return "%s(chrom1 = %s, pos1 = %s, strand1 = %s, chrom2 = %s, pos2 = %s, strand2 = %s, id = %s)" % (
             self.__class__.__name__,
             self.chrom1,
         	self.pos1,
         	self.strand1,
         	self.chrom2,
         	self.pos2,
-        	self.strand2
+        	self.strand2,
+            self.id
         )
 
     def __repr__(self):
-        return "%s(%s, %s, %s, %s, %s, %s)" % (
+        return "%s(%s, %s, %s, %s, %s, %s, %s)" % (
             self.__class__.__name__,
             self.chrom1,
         	self.pos1,
         	self.strand1,
         	self.chrom2,
         	self.pos2,
-        	self.strand2
+        	self.strand2,
+            self.id
         )
 
 
@@ -118,6 +121,38 @@ def vcf_alt_format_check(alt):
     isleft = legal_pattern_left.match(alt)
     return isright or isleft
 
+def makeID(chrom1,pos1,svclass):
+    ##ENCODING FASTA ID FOR USE IN MATCHING LATER
+    ALPHABET= ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    
+    position= int(str(pos1)[0:2])
+    
+    if position < 26:
+        encoded_start = ALPHABET[position]
+    elif position < 100:
+        encoded_start = ALPHABET[position//4]
+
+    position= int(str(pos1)[-2:])
+    
+    if position < 26:
+        encoded_end = ALPHABET[position]
+    elif position < 100:
+        encoded_end = ALPHABET[position//4]
+        
+    sum_remaining = sum(int(d) for d in str(pos1)[2:-2])
+    
+    encoded_position = encoded_start + ALPHABET[sum_remaining%26] + encoded_end
+    
+    identifier_key = (
+        str(svclass)
+        + "_"
+        + str(chrom1) 
+        + "_"
+        + encoded_position
+        + "_SV" #This indicates structural variant. It is added in the generateMutFasta script as well but not in this function.  
+        )
+
+    return identifier_key
 
 def bedpe_load(filepath):
     """
@@ -140,7 +175,9 @@ def bedpe_load(filepath):
             pos2 = tmpline[header.index('start2')]
             strand1 = tmpline[header.index('strand1')]
             strand2 = tmpline[header.index('strand2')]
-            bedpe = BedpeFormat(chrom1, pos1, strand1, chrom2, pos2, strand2)
+            svclass = tmpline[header.index('svclass')]
+            id = makeID(chrom1,pos1,svclass)
+            bedpe = BedpeFormat(chrom1, pos1, strand1, chrom2, pos2, strand2,id)
             bedpe_list.append(bedpe)
 
     if not bedpe_list:

@@ -15,6 +15,25 @@ def netmhc_pep_prep(filepath, svfusions):
                 f.write(neoepitope + '\n')
 
 
+def netmhc_pep_prep_fasta(filepath_WT,filepath_MUT, svfusions):
+    """
+    :param svfusions: a list of svfusion classes
+    :param filepath: the output file
+    :return: None
+    """
+    print("Preparing FASTAs for netMHC.")
+    with open(filepath_MUT, 'w') as f_mut, open(filepath_WT,'w') as f_wt:
+        for svfusion in svfusions:
+            if svfusion.mt_altered_aa:
+                f_mut.write('>' + svfusion.sv.id + '\n')
+                f_mut.write(svfusion.mt_altered_aa + '\n')
+                f_wt.write('>' + svfusion.sv.id + '_WT1\n')
+                f_wt.write(svfusion.wt_altered_aa1 + '\n')
+                f_wt.write('>' + svfusion.sv.id + '_WT2\n')
+                f_wt.write(svfusion.wt_altered_aa2 + '\n')
+   
+
+
 def netmhc_run(netmhcpath, peppath, alleles, outpath):
     """
     :param netmhcpath: absolute path of the netmhc execution file

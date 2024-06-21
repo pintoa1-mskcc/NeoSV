@@ -69,6 +69,7 @@ def sv_pattern_infer_bedpe(bedpe):
     chrom2, pos2, strand2 = bedpe.chrom2, int(bedpe.pos2), bedpe.strand2
     # the insertion information is lost in BEDPE file
     insertion = ''
+    id = bedpe.id
 
     # in BEDPE format, + always indicates 5' sequence and - indicates 3' sequence
     # refer to SVtools vcftobedpeconverter.py and issue #5 on GitHub
@@ -85,7 +86,7 @@ def sv_pattern_infer_bedpe(bedpe):
         pos1 += 1
         pos2 += 1
 
-    return StructuralVariant(chrom1, pos1, chrom2, pos2, insertion, pattern)
+    return StructuralVariant(chrom1, pos1, chrom2, pos2, insertion, pattern,id)
 
 
 

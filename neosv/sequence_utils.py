@@ -1,14 +1,14 @@
 from Bio.Seq import Seq
 
 
-def set_aa_seq(svfusion):
+def set_aa_seq(nt_sequence):
     """
     :function: translate the nucelotide sequence in svfusion to amino acid sequence
     :param: svfusion: a SVFusion class
     :return: the corresponding amino acid sequence
     :NOTE: if there is a stop codon, the process will stop before translating all nucleotides
     """
-    dna_seq = Seq(trim_to_3x(svfusion.nt_sequence))
+    dna_seq = Seq(trim_to_3x(nt_sequence))
     mrna_seq = dna_seq.transcribe()
     aa_seq = mrna_seq.translate(to_stop=True)
     return str(aa_seq)
@@ -33,7 +33,35 @@ def trim_to_3x(nt_sequence):
         return nt_sequence[: -remainder]
     else:
         return nt_sequence
+    
+def wt_and_mut_altered_aas(svfusion,pad_len):
+    mt = svfusion.aa_sequence
+    wt1 = svfusion.cc_1.transcript.protein_sequence
+    wt2 = svfusion.cc_2.transcript.protein_sequence
 
+    len_from_start1 = len_from_end2 = 0
+
+    ## from start
+    for i in range(0, len(wt1)):
+        len_from_start1 = i
+        if wt1[i:i + 1] != mt[i:i + 1]:
+            break
+
+    ## from end
+    wt2_rev = wt2[::-1]
+    mt_rev = mt[::-1]
+    for i in range(0, len(wt2)):
+        len_from_end2 = i
+        if wt2_rev[i:i + 1] != mt_rev[i:i + 1]:
+            break
+
+    mt_start = len_from_start1
+    mt_end = len(mt) - len_from_end2
+
+    svfusion.wt_altered_aa1 = wt1[max(0, len_from_start1 - pad_len + 1):min(len(wt1), len_from_start1 + pad_len-1)]
+    svfusion.wt_altered_aa2 = wt2[max(0, len_from_end2 - pad_len + 1):min(len(wt2), len_from_end2 + pad_len-1)]
+    svfusion.mt_altered_aa = mt[max(0, mt_start - pad_len + 1):min(len(mt), mt_end + pad_len-1)]
+    return(svfusion)
 
 def generate_neoepitopes(svfusion, window_range):
     """
