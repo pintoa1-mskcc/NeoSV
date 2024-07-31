@@ -118,7 +118,11 @@ class SVFusion(object):
         self.wt_altered_aa1 = None
         self.wt_altered_aa2 = None
         self.mt_altered_aa = None
-
+        self.mt_altered_NT = None
+        self.wt_altered_NT = None
+        self.wt_altered_NT2 = None
+        self.aa_sequence_noutr = None
+        
     def __str__(self):
         return "%s(sv = %r, cc_1 = %r, cc_2 = %r, transcript_1_nt = %s, transcript_2_nt = %s)" % (
             self.__class__.__name__,

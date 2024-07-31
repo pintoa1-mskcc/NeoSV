@@ -14,7 +14,7 @@ class StructuralVariant(object):
         self.pos2 = int(pos2)
         self.insertion = insertion
         self.pattern = int(pattern)
-        self.id = id
+        self.id = id #+ "_" + self.svtype(StructuralVariant)
 
     def __str__(self):
         return "%s(chrom1 = %s, pos1 = %d, chrom2 = %s, pos2 = %d, insertion = '%s', pattern = %d, id = %s)" % (
@@ -78,3 +78,27 @@ class StructuralVariant(object):
                     return 'DEL'
                 else:
                     return 't2tINV'
+
+    @property
+    def svtypeshort(self):
+        if self.chrom1 != self.chrom2:
+            return 'TRA'
+        else:
+            if self.pos1 < self.pos2:
+                if self.pattern == 1:
+                    return 'DEL'
+                elif self.pattern == 2:
+                    return 'HIN'
+                elif self.pattern == 3:
+                    return 'DUP'
+                else:
+                    return 'TIN'
+            else:
+                if self.pattern == 1:
+                    return 'DUP'
+                elif self.pattern == 2:
+                    return 'HIN'
+                elif self.pattern == 3:
+                    return 'DEL'
+                else:
+                    return 'TIN'

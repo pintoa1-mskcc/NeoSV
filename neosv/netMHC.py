@@ -11,8 +11,9 @@ def netmhc_pep_prep(filepath, svfusions):
     print("Preparing peptides for netMHC.")
     with open(filepath, 'w') as f:
         for svfusion in svfusions:
-            for neoepitope in svfusion.neoepitopes:
-                f.write(neoepitope + '\n')
+            if svfusion.neoepitopes:
+                for neoepitope in svfusion.neoepitopes:
+                    f.write(neoepitope + '\n')
 
 
 def netmhc_pep_prep_fasta(filepath_WT,filepath_MUT, svfusions):
@@ -24,16 +25,24 @@ def netmhc_pep_prep_fasta(filepath_WT,filepath_MUT, svfusions):
     print("Preparing FASTAs for netMHC.")
     with open(filepath_MUT, 'w') as f_mut, open(filepath_WT,'w') as f_wt:
         for svfusion in svfusions:
-            if svfusion.mt_altered_aa:
-                f_mut.write('>' + svfusion.sv.id + '\n')
+            if svfusion.aa_sequence:
+                id = svfusion.sv.id + svfusion.sv.svtype 
+                f_mut.write('>' + id + '\n')
                 f_mut.write(svfusion.mt_altered_aa + '\n')
-                f_wt.write('>' + svfusion.sv.id + '_WT1\n')
-                f_wt.write(svfusion.wt_altered_aa1 + '\n')
-                f_wt.write('>' + svfusion.sv.id + '_WT2\n')
-                f_wt.write(svfusion.wt_altered_aa2 + '\n')
-   
-
-
+                f_mut.write('>' + id + '\n')
+                f_mut.write(svfusion.aa_sequence + '\n')
+                
+                if svfusion.wt_altered_aa2 != None: 
+                        
+                    f_wt.write('>' + id + '_WT1\n')
+                    f_wt.write(svfusion.wt_altered_aa1 + '\n')
+                    f_wt.write('>' + id + '_WT2\n')
+                    f_wt.write(svfusion.wt_altered_aa2 + '\n')
+                    
+                else:
+                    f_wt.write('>' + id + '_WT\n')
+                    f_wt.write(svfusion.wt_altered_aa1 + '\n')
+                
 def netmhc_run(netmhcpath, peppath, alleles, outpath):
     """
     :param netmhcpath: absolute path of the netmhc execution file
