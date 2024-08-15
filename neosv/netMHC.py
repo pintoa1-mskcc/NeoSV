@@ -34,13 +34,13 @@ def netmhc_pep_prep_fasta(filepath_WT,filepath_MUT, svfusions):
                 
                 if svfusion.wt_altered_aa2 != None: 
                         
-                    f_wt.write('>' + id + '_WT1\n')
+                    f_wt.write('>'+ id + 'W1\n')
                     f_wt.write(svfusion.wt_altered_aa1 + '\n')
-                    f_wt.write('>' + id + '_WT2\n')
+                    f_wt.write('>' + id + '_W2\n')
                     f_wt.write(svfusion.wt_altered_aa2 + '\n')
                     
                 else:
-                    f_wt.write('>' + id + '_WT\n')
+                    f_wt.write('>' + id + '_W\n')
                     f_wt.write(svfusion.wt_altered_aa1 + '\n')
                 
 def netmhc_run(netmhcpath, peppath, alleles, outpath):

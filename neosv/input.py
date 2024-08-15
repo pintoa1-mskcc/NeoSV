@@ -147,7 +147,7 @@ def makeID(chrom1,pos1,svclass):
         str(chrom1) 
         + "_"
         + encoded_position
-        + "_SV" #This indicates structural variant. It is added in the generateMutFasta script as well but not in this function.  
+        + "V" #This indicates structural variant. It is added in the generateMutFasta script as well but not in this function.  
         )
 
     return identifier_key

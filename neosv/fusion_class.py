@@ -118,9 +118,6 @@ class SVFusion(object):
         self.wt_altered_aa1 = None
         self.wt_altered_aa2 = None
         self.mt_altered_aa = None
-        self.mt_altered_NT = None
-        self.wt_altered_NT = None
-        self.wt_altered_NT2 = None
         self.aa_sequence_noutr = None
         
     def __str__(self):

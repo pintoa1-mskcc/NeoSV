@@ -64,20 +64,20 @@ class StructuralVariant(object):
                 if self.pattern == 1:
                     return 'DEL'
                 elif self.pattern == 2:
-                    return 'h2hINV'
+                    return 'hIV'
                 elif self.pattern == 3:
                     return 'DUP'
                 else:
-                    return 't2tINV'
+                    return 'tIV'
             else:
                 if self.pattern == 1:
                     return 'DUP'
                 elif self.pattern == 2:
-                    return 'h2hINV'
+                    return 'hIV'
                 elif self.pattern == 3:
                     return 'DEL'
                 else:
-                    return 't2tINV'
+                    return 'tIV'
 
     @property
     def svtypeshort(self):
