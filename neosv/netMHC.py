@@ -29,8 +29,6 @@ def netmhc_pep_prep_fasta(filepath_WT,filepath_MUT, svfusions):
                 id = svfusion.sv.id + svfusion.sv.svtype 
                 f_mut.write('>' + id + '\n')
                 f_mut.write(svfusion.mt_altered_aa + '\n')
-                f_mut.write('>' + id + '\n')
-                f_mut.write(svfusion.aa_sequence + '\n')
                 
                 if svfusion.wt_altered_aa2 != None: 
                         
@@ -40,7 +38,7 @@ def netmhc_pep_prep_fasta(filepath_WT,filepath_MUT, svfusions):
                     f_wt.write(svfusion.wt_altered_aa2 + '\n')
                     
                 else:
-                    f_wt.write('>' + id + '_W\n')
+                    f_wt.write('>' + id + 'W\n')
                     f_wt.write(svfusion.wt_altered_aa1 + '\n')
                 
 def netmhc_run(netmhcpath, peppath, alleles, outpath):
