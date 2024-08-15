@@ -26,7 +26,7 @@ def netmhc_pep_prep_fasta(filepath_WT,filepath_MUT, svfusions):
     with open(filepath_MUT, 'w') as f_mut, open(filepath_WT,'w') as f_wt:
         for svfusion in svfusions:
             if svfusion.aa_sequence:
-                id = svfusion.sv.id + '_'+ svfusion.sv.svtype 
+                id = svfusion.sv.id + svfusion.sv.svtype 
                 f_mut.write('>' + id + '\n')
                 f_mut.write(svfusion.mt_altered_aa + '\n')
                 f_mut.write('>' + id + '\n')
